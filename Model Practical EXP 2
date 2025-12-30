@@ -1,0 +1,20 @@
+import pandas as pd
+
+data = pd.read_csv("finds.csv")
+
+concepts = data.iloc[:, :-1].values
+target = data.iloc[:, -1].values
+
+hypothesis = None
+for i in range(len(target)):
+    if target[i] == "Yes":
+        hypothesis = concepts[i].copy()
+        break
+
+for i in range(len(concepts)):
+    if target[i] == "Yes":
+        for j in range(len(hypothesis)):
+            if concepts[i][j] != hypothesis[j]:
+                hypothesis[j] = '?'
+
+print(hypothesis)
